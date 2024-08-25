@@ -165,4 +165,4 @@ MonoBehaviour:
   explosion: {fileID: 7678401589922002154, guid: 89b0ee19869cf9b4ebd39da4b62d6bc1, type: 3}
   cameraFade: {fileID: 0}
   gameOverScreen: {fileID: 0}
-  mat: {fileID: -4586444591600750072, guid: 1a556a02fb1fb64409dcf1274d1301e3, type: 3}
+  mat: {fileID: 2100000, guid: 3d93619025081414388577c7c404be4a, type: 2}

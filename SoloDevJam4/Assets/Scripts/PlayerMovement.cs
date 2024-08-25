@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private float startingScaleCount;
     private float _imgDecreseCount;
     public Material mat;
+    [SerializeField] private GameObject playerMesh;
 
     [Header("Light - Camera")]
     [SerializeField] private Camera sceneCamera;
@@ -72,16 +73,14 @@ public class PlayerMovement : MonoBehaviour
         hpText.text = "3";
         startingScaleCount = hp;
         _imgDecreseCount = _greenImage.rectTransform.sizeDelta.x / startingScaleCount;
+        playerMesh.SetActive(false);
     }
 
     void Start()
     {
-        FollowCamera2D.SetTarget(gameObject.transform);
-        _rb = GetComponent<Rigidbody>();
-        _rb.useGravity = false;
-        _gravity = Physics.gravity;
-        _canChangeGravity = true;
-        _isShooting = false;
+        StartCoroutine(PlayAnimation());
+        
+       
     }
 
     private void Update()
@@ -271,6 +270,24 @@ public class PlayerMovement : MonoBehaviour
             color.a = alpha; 
             redImage.color = color; 
         }
+    }
+
+    IEnumerator PlayAnimation()
+    {
+        _rb = GetComponent<Rigidbody>();
+        _rb.useGravity = false;
+        float tempSpeed = speed;
+        speed = 0;
+        _isShooting = true;
+        _canChangeGravity = false;
+        yield return new WaitForSeconds(2.2f);
+        playerMesh.SetActive(true);
+        speed = tempSpeed;
+        _isShooting = false;
+        _canChangeGravity = true;
+        _rb.isKinematic = false;
+        FollowCamera2D.SetTarget(gameObject.transform);
+        _gravity = Physics.gravity;
     }
 
 }

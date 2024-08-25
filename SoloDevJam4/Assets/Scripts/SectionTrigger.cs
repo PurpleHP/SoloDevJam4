@@ -11,11 +11,9 @@ public class SectionTrigger : MonoBehaviour
     [Header("Enemy Spawn")]  
     [SerializeField] private GameObject[] enemyTypes;
     private GameObject[] enemies; 
-    public int numberOfEnemies = 4;
+    public int numberOfEnemies = 5;
     public float minDistanceBetweenEnemies = 5f; 
     private List<Vector2> usedPositions = new List<Vector2>(); // List to store used positions
-    private int totalInstantiatedPrefab = 0;
-    
     
     private void OnTriggerEnter(Collider other)
     {
@@ -43,7 +41,7 @@ public class SectionTrigger : MonoBehaviour
             Instantiate(road, spawnPointCoordinates, Quaternion.identity);
 
             Vector2 xRange = new Vector2(spawnPointCoordinates.x - 21f, spawnPointCoordinates.x + 49f);
-            Vector2 yRange = new Vector2(spawnPointCoordinates.y - 2f, spawnPointCoordinates.y + 7f);
+            Vector2 yRange = new Vector2(spawnPointCoordinates.y - 1f, spawnPointCoordinates.y + 6f);
 
             for (int i = 0; i < numberOfEnemies; i++)
             {
