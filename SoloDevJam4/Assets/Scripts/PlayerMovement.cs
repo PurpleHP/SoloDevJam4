@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public float rotationDuration = 1.5f;
     private float score;
     public float hp;
+    private float startHp;
     private float startingScaleCount;
     private float _imgDecreseCount;
     public Material mat;
@@ -51,13 +52,20 @@ public class PlayerMovement : MonoBehaviour
     [Header("Effects")]
     [SerializeField] private GameObject explosion;
 
-
+    [Header("Sound")] 
+    [SerializeField] private GameObject run;
+    [SerializeField] private GameObject jump;
+    [SerializeField] private GameObject shoot;
+    [SerializeField] private GameObject enemyDeath;
+    [SerializeField] private GameObject playerDeath;
+    [SerializeField] private GameObject enemyAttack;
 
     private void Awake()
     {
         mat.color = Color.white;
         if(hp ==0)
             hp = 3;
+        startHp = hp;
         PlayerPrefs.SetInt("Score",0);
         score = 0;
         scoreText.text = "0";
@@ -79,7 +87,10 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         speed += 0.001f;
-        score += Time.deltaTime + (speed * 0.0001f);
+        if (_rb.linearVelocity.x > 0.1f)
+        {
+            score += Time.deltaTime + (speed * 0.0001f);
+        }
         int intScore = Mathf.FloorToInt(score);
         
         PlayerPrefs.SetInt("Score",intScore);
@@ -140,7 +151,6 @@ public class PlayerMovement : MonoBehaviour
         FollowCamera2D.cameraCenterY = _onNormalGravity ? 0.6f : 0.4f;
         _onNormalGravity = !_onNormalGravity;
 
-        Debug.Log(FollowCamera2D.cameraCenterY);
         float startCameraRot = cameraAngles.x;
         Quaternion startCameraRotation = Quaternion.Euler(startCameraRot, cameraAngles.y, cameraAngles.z);
         Quaternion targetCameraRotation = Quaternion.Euler(startCameraRot*-1, cameraAngles.y, cameraAngles.z);
@@ -196,7 +206,7 @@ public class PlayerMovement : MonoBehaviour
 
         hpText.text = hp.ToString();
         ScaleBarDown();
-        if (hp <= 0)
+        if (hp == 0 || (hp < 0 && speed != 0))
         {
             speed = 0;
             animator.SetBool(IsDead,true);
@@ -211,17 +221,19 @@ public class PlayerMovement : MonoBehaviour
     
     public void ScaleBarDown()
     {
+     
         RectTransform rt = _greenImage.rectTransform;
 
-        //Decreses widht by imgDecreseCount
-        var imgWidth = rt.sizeDelta;
-        imgWidth = new Vector2(imgWidth.x - _imgDecreseCount, imgWidth.y);
-        rt.sizeDelta = imgWidth;
+        if (hp == 0)
+        {
+            Vector3 temp = rt.transform.localScale;
+            _greenImage.rectTransform.localScale = new Vector3(0,temp.y,temp.z);
+            return;
+        }
+        rt.localScale = new Vector3(rt.localScale.x - 1.0f/startHp, 1, 1);
 
-        //Moves to right by half of imgDecreseCount
-        var imgPos = rt.anchoredPosition;
-        imgPos = new Vector2(imgPos.x + (_imgDecreseCount / 2), imgPos.y);
-        rt.anchoredPosition = imgPos;
+     
+    
     }
 
     public IEnumerator TakeDamage()

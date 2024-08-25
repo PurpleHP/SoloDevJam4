@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 910946488051490651}
   - component: {fileID: 7468372487664336779}
   m_Layer: 0
-  m_Name: Explosion Particle 1
+  m_Name: Enemy Explode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -48.572094, y: 1.5263188, z: 25.330002}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 350265531375433618}

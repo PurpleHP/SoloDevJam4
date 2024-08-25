@@ -7,16 +7,25 @@ public class SectionTrigger : MonoBehaviour
 {
     [SerializeField] private GameObject road;
     private Vector3 _spawnPosition;
-    
-    [Header("Enemy Spawn")]
-    public GameObject prefab; 
+
+    [Header("Enemy Spawn")]  
+    [SerializeField] private GameObject[] enemyTypes;
+    private GameObject[] enemies; 
     public int numberOfEnemies = 4;
     public float minDistanceBetweenEnemies = 5f; 
     private List<Vector2> usedPositions = new List<Vector2>(); // List to store used positions
-
+    private int totalInstantiatedPrefab = 0;
+    
     
     private void OnTriggerEnter(Collider other)
     {
+        enemies = new GameObject[numberOfEnemies];
+
+        for (int i = 0; i < numberOfEnemies; i++)
+        {
+            int randomIndex = Random.Range(0, enemyTypes.Length); // Randomly choose from available enemy types
+            enemies[i] = enemyTypes[randomIndex];
+        }
         if (other.gameObject.CompareTag("Trigger"))
         {
             foreach (Transform child in transform)
@@ -50,7 +59,7 @@ public class SectionTrigger : MonoBehaviour
 
                 usedPositions.Add(randomWorldPosition);
 
-                GameObject instance = Instantiate(prefab);
+                GameObject instance = Instantiate(enemies[i]);
                 instance.transform.position = new Vector3(randomWorldPosition.x, randomWorldPosition.y, 0);
             }
         }

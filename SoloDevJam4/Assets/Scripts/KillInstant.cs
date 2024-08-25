@@ -13,6 +13,7 @@ public class KillInstant : MonoBehaviour
         {
 
             PlayerMovement pm = other.gameObject.GetComponent<PlayerMovement>();
+            pm.hp = 1;
             pm.GotHit();
 
             pm.speed = 0;

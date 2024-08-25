@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -11,8 +12,10 @@ public class MainMenu : MonoBehaviour
 
    public void StartLevel()
    {
+      _cameraFade.GetComponent<Image>().enabled = true;
       _cameraFade.StartFade("Level");
    }
+   
 
    public void ShowLeaderboard()
    {
