@@ -1,12 +1,20 @@
+using System;
 using System.Collections;
 using CustomCamera;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody _rb;
     public float speed = 5f;
     public float rotationDuration = 1.5f;
+    private float score;
+    public float hp;
+    private float startingScaleCount;
+    private float _imgDecreseCount;
+
 
     [Header("Light - Camera")]
     [SerializeField] private Camera sceneCamera;
@@ -21,6 +29,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float collisionRadius = 0.8f;
     [SerializeField] LayerMask collisionLayer;
 
+    [Header("UI")] 
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI hpText;
+    [SerializeField] private Image _greenImage;
+    [SerializeField] private Image redImage;
+    
     [Header("Animation")] 
     [SerializeField] private Animator animator;
     //Shooting---
@@ -30,6 +44,21 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float bulletSpeed;
     [SerializeField] private GameObject bulletPrefab;
     private static readonly int DidShoot = Animator.StringToHash("didShoot");
+    private static readonly int IsOnAir = Animator.StringToHash("isOnAir");
+    private static readonly int Hit = Animator.StringToHash("gotHit");
+
+
+    private void Awake()
+    {
+        if(hp ==0)
+            hp = 3;
+        PlayerPrefs.SetInt("Score",0);
+        score = 0;
+        scoreText.text = "0";
+        hpText.text = "3";
+        startingScaleCount = hp;
+        _imgDecreseCount = _greenImage.rectTransform.sizeDelta.x / startingScaleCount;
+    }
 
     void Start()
     {
@@ -43,14 +72,26 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        speed += 0.001f;
+        score += Time.deltaTime;
+        int intScore = Mathf.FloorToInt(score);
+        
+        PlayerPrefs.SetInt("Score",intScore);
+
+        scoreText.text = intScore + " m";
+        
         if (Input.GetKeyDown(KeyCode.Space) && _canChangeGravity)
         {
             ChangeGravity();
         }
         Collider[] colliders= Physics.OverlapSphere(playerFeet.transform.position, collisionRadius, collisionLayer);
-        
-        if(colliders.Length != 0)
+
+        if (colliders.Length != 0)
+        {
             _canChangeGravity = true;
+            animator.SetBool(IsOnAir,false);
+        }
+        
 
        
         if (Input.GetKeyDown(KeyCode.Q) && !_isShooting)
@@ -73,6 +114,7 @@ public class PlayerMovement : MonoBehaviour
     //Changes gravity, rotates light and camera for smoothness (and rotates player -> the empty gameobject)
     void ChangeGravity()
     {
+        animator.SetBool(IsOnAir,true);
         _gravity *= -1;
         _canChangeGravity = false;
         RotateAll();
@@ -134,6 +176,67 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(gunCooldownAndBulletDestroy);
         _isShooting = false;
         Destroy(bullet, gunCooldownAndBulletDestroy);
+    }
+
+    public void GotHit()
+    {
+        animator.SetTrigger(Hit);
+        hp--;
+        hpText.text = hp.ToString();
+        ScaleBarDown();
+        StartCoroutine(TakeDamage());
+    }
+    
+    public void ScaleBarDown()
+    {
+        RectTransform rt = _greenImage.rectTransform;
+
+        //Decreses widht by imgDecreseCount
+        var imgWidth = rt.sizeDelta;
+        imgWidth = new Vector2(imgWidth.x - _imgDecreseCount, imgWidth.y);
+        rt.sizeDelta = imgWidth;
+
+        //Moves to right by half of imgDecreseCount
+        var imgPos = rt.anchoredPosition;
+        imgPos = new Vector2(imgPos.x + (_imgDecreseCount / 2), imgPos.y);
+        rt.anchoredPosition = imgPos;
+    }
+
+    public IEnumerator TakeDamage()
+    {
+        float duration = 0.3f;
+        float targetAlpha = 0.3f;
+        float startAlpha = 0f;
+
+        for (float t = 0; t < duration; t += Time.deltaTime)
+        {
+            float alpha = Mathf.Lerp(startAlpha, targetAlpha, t / duration);
+            SetImageAlpha(alpha);
+            yield return null; 
+        }
+
+        SetImageAlpha(targetAlpha);
+
+        yield return new WaitForSeconds(0.2f);
+
+        for (float t = 0; t < duration; t += Time.deltaTime)
+        {
+            float alpha = Mathf.Lerp(targetAlpha, startAlpha, t / duration);
+            SetImageAlpha(alpha);
+            yield return null;
+        }
+
+        SetImageAlpha(startAlpha);
+    }
+
+    private void SetImageAlpha(float alpha)
+    {
+        if (redImage != null)
+        {
+            Color color = redImage.color;
+            color.a = alpha; 
+            redImage.color = color; 
+        }
     }
 
 }

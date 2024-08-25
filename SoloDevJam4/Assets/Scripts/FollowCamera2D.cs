@@ -140,6 +140,7 @@ namespace CustomCamera
                 if (isBoundVertical) {
                     tempVec.y = Mathf.Clamp (tempVec.y, lowerBound + vertExtent, upperBound - vertExtent);
                 }
+                leftMoveSpeed = playerScript.speed *-1;
                 tempVec.x -= Time.deltaTime * leftMoveSpeed;
 
                 tempVec.z = transform.position.z;
