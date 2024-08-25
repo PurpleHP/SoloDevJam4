@@ -379,7 +379,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: CharacterArmature|Weapon
+      name: StandingGreenAlien|Weapon
       takeName: CharacterArmature|Weapon
       internalID: 4023202712368722038
       firstFrame: 0

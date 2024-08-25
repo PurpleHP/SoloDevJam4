@@ -4900,6 +4900,37 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &1490325407
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1490325408}
+  m_Layer: 7
+  m_Name: Spawnpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1490325408
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490325407}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.88, y: 1.88, z: 0.46}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2000497285}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1502875971
 GameObject:
   m_ObjectHideFlags: 0
@@ -6994,8 +7025,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4820043376520371442, guid: 0fb52df10843b014e8bb3ad7938728ea, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1490325408}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5309721168650487368, guid: 0fb52df10843b014e8bb3ad7938728ea, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2000497290}
   m_SourcePrefab: {fileID: 100100000, guid: 0fb52df10843b014e8bb3ad7938728ea, type: 3}
 --- !u!4 &2000497285 stripped
 Transform:
@@ -7007,6 +7044,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5309721168650487368, guid: 0fb52df10843b014e8bb3ad7938728ea, type: 3}
   m_PrefabInstance: {fileID: 2000497284}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2000497290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000497286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 217dbc72d5916334bb5bd132521e1265, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rockPrefab: {fileID: 414592422554662052, guid: 827f4cbfe6a9bfe4c85a38c4be70b4d9, type: 3}
+  player: {fileID: 1471998883}
+  throwSpeed: 5
+  countdownTime: 3
 --- !u!1 &2027416560
 GameObject:
   m_ObjectHideFlags: 0
