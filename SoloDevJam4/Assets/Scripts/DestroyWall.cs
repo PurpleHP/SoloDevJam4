@@ -8,4 +8,6 @@ public class DestroyWall : MonoBehaviour
     
       Destroy(other.transform.parent != null ? other.transform.parent.gameObject : other.gameObject);
    }
+   
+   
 }

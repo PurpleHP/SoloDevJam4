@@ -9,10 +9,9 @@ public class SectionTrigger : MonoBehaviour
     private Vector3 _spawnPosition;
     
     [Header("Enemy Spawn")]
-    public GameObject prefab; // Reference to the prefab you want to instantiate
-    //public Transform parentObject; // Reference to the parent GameObject
-    public int numberOfPrefabs = 4; // Number of prefabs to instantiate
-    public float minDistanceBetweenPrefabs = 5f; // Minimum allowed distance between prefabs
+    public GameObject prefab; 
+    public int numberOfEnemies = 4;
+    public float minDistanceBetweenEnemies = 5f; 
     private List<Vector2> usedPositions = new List<Vector2>(); // List to store used positions
 
     
@@ -34,34 +33,29 @@ public class SectionTrigger : MonoBehaviour
                 _spawnPosition.z);
             Instantiate(road, spawnPointCoordinates, Quaternion.identity);
 
-            // Define the local coordinate ranges relative to the parent object
             Vector2 xRange = new Vector2(spawnPointCoordinates.x - 21f, spawnPointCoordinates.x + 49f);
             Vector2 yRange = new Vector2(spawnPointCoordinates.y - 2f, spawnPointCoordinates.y + 7f);
 
-            for (int i = 0; i < numberOfPrefabs; i++)
+            for (int i = 0; i < numberOfEnemies; i++)
             {
-                Vector2 randomLocalPosition;
+                Vector2 randomWorldPosition;
                 bool positionIsValid;
 
                 do
                 {
-                    randomLocalPosition = GenerateRandomPosition(xRange, yRange);
-                    positionIsValid = IsPositionValid(randomLocalPosition);
+                    randomWorldPosition = GenerateRandomPosition(xRange, yRange);
+                    positionIsValid = IsPositionValid(randomWorldPosition);
                 }
                 while (!positionIsValid);
 
-                // Store the valid position
-                usedPositions.Add(randomLocalPosition);
+                usedPositions.Add(randomWorldPosition);
 
-                // Instantiate the prefab as a child of the parent object
-                GameObject instance = Instantiate(prefab, gameObject.transform);
-                instance.transform.localPosition = new Vector3(randomLocalPosition.x, randomLocalPosition.y, 0);
+                GameObject instance = Instantiate(prefab);
+                instance.transform.position = new Vector3(randomWorldPosition.x, randomWorldPosition.y, 0);
             }
         }
     }
-    
-    
-    //Enemy Spawn
+
     private Vector2 GenerateRandomPosition(Vector2 xRange, Vector2 yRange)
     {
         float x = Random.Range(xRange.x, xRange.y);
@@ -73,7 +67,7 @@ public class SectionTrigger : MonoBehaviour
     {
         foreach (Vector2 usedPosition in usedPositions)
         {
-            if (Vector2.Distance(position, usedPosition) < minDistanceBetweenPrefabs)
+            if (Vector2.Distance(position, usedPosition) < minDistanceBetweenEnemies)
             {
                 return false;
             }

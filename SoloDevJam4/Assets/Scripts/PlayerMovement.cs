@@ -74,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         speed += 0.001f;
-        score += Time.deltaTime;
+        score += Time.deltaTime + (speed * 0.0001f);
         int intScore = Mathf.FloorToInt(score);
         
         PlayerPrefs.SetInt("Score",intScore);
