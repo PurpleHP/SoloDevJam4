@@ -200,6 +200,7 @@ public class PlayerMovement : MonoBehaviour
         {
             speed = 0;
             animator.SetBool(IsDead,true);
+            _rb.isKinematic = true;
             _rb.linearVelocity = Vector3.zero;
             _rb.useGravity = true;
 

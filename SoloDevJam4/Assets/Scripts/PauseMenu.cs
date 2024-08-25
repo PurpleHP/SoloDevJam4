@@ -28,7 +28,8 @@ public class PauseMenu : MonoBehaviour
     public void ReturnToMenu()
     {
         Time.timeScale = 1;
-        _cameraFade.StartFade("MainMenu");
+        _cameraFade.transform.parent.GetComponent<Image>().enabled = true;
+        _cameraFade.StartFade("Main Menu");
     }
 
     

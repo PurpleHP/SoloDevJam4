@@ -5,7 +5,7 @@ using UnityEngine;
 public class KillPlayer : MonoBehaviour
 {
     [SerializeField] private GameObject explosion;
-    [SerializeField] private CameraFade cameraFade;
+    public CameraFade cameraFade;
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private Material mat;
     private void OnTriggerEnter(Collider other)
@@ -15,11 +15,10 @@ public class KillPlayer : MonoBehaviour
             
             PlayerMovement pm = other.gameObject.GetComponent<PlayerMovement>();
             pm.GotHit();
-            if (pm.hp == 0)
+            if (pm.hp <= 0 && other.gameObject != null)
             {
                 pm.speed = 0;
                 pm.GetComponent<Rigidbody>().isKinematic = true;
-                
                 StartCoroutine(WaitForFade(other.gameObject));
             }
             else if(pm.hp < 0)
@@ -30,6 +29,7 @@ public class KillPlayer : MonoBehaviour
                     StartCoroutine(ChangeColor(color));
                 }
             }
+            
         }
     }
 
@@ -45,8 +45,11 @@ public class KillPlayer : MonoBehaviour
         yield return new WaitForSeconds(1.4f);
         cameraFade.StartFade();
         yield return new WaitForSeconds(0.3f);
-        Instantiate(explosion, player.transform.position, Quaternion.identity);
-        Destroy(player);
+        if (player != null)
+        {
+            Instantiate(explosion, player.transform.position, Quaternion.identity);
+            Destroy(player);
+        }
         yield return new WaitForSeconds(1.2f);
         gameOverScreen.SetActive(true);
     }

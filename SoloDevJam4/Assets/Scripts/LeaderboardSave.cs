@@ -8,20 +8,15 @@ using UnityEngine.SceneManagement;
 
 namespace LeaderboardCreatorDemo
 {
-    public class LeaderboardManager : MonoBehaviour
+    public class LeaderboardSave : MonoBehaviour
     {
-        [SerializeField] private TMP_Text[] _entryTextObjects;
-        [SerializeField] private TMP_Text[] _entryTextObjectsScore;
-
-        [SerializeField] private GameObject usernameContainer;
-        [SerializeField] private GameObject scoreContainer;
-
         [SerializeField] private TMP_InputField _usernameInputField;
         [SerializeField] private TMP_Text _scoreText1;
         [SerializeField] private TMP_Text _scoreText2;
 
         [SerializeField] private TMP_Text warningText;
         [SerializeField] private GameObject restartMenu;
+        [SerializeField] private GameObject lockImg;
 
 // Make changes to this section according to how you're storing the player's score:
 // ------------------------------------------------------------
@@ -32,10 +27,7 @@ namespace LeaderboardCreatorDemo
         private void Start()
         {
             Debug.Log(PlayerPrefs.GetInt("Score"));
-            if (_entryTextObjects.Length != 0)
-            {
-                LoadEntries();
-            }
+           
             if (_scoreText1 != null)
             {
                 _scoreText1.text = "Final Score: " + PlayerPrefs.GetInt("Score");
@@ -49,19 +41,10 @@ namespace LeaderboardCreatorDemo
             }
         }
 
-        private void Awake()
-        {
-            if (SceneManager.GetActiveScene().name == "Main Menu")
-            {
-                _entryTextObjects = usernameContainer.GetComponentsInChildren<TMP_Text>();
-                _entryTextObjectsScore = scoreContainer.GetComponentsInChildren<TMP_Text>();
-            }
-        }
-
+      
         private void Update()
         {
-            Vector3 pos = scoreContainer.transform.position;
-            scoreContainer.transform.position = new Vector3(pos.x,usernameContainer.transform.position.y,pos.z);
+           
             if (_scoreText1 != null)
             {
                 _scoreText1.text = "Final Score: " + PlayerPrefs.GetInt("Score");
@@ -75,33 +58,15 @@ namespace LeaderboardCreatorDemo
             }
         }
 
-        private void LoadEntries()
-        {
-            // Q: How do I reference my own leaderboard?
-            // A: Leaderboards.<NameOfTheLeaderboard>
-        
-            Leaderboards.SoloDevJa4.GetEntries(entries =>
-            {
-                foreach (var t in _entryTextObjects)
-                    t.text = "";
-                
-                var length = Mathf.Min(_entryTextObjects.Length, entries.Length);
-                for (int i = 0; i < length; i++)
-                {
-                    string tempText = entries[i].Rank.ToString();
-                    string rankText = tempText.PadLeft(5 - tempText.Length);
-                    _entryTextObjects[i].text = $"{rankText}.   {entries[i].Username}";
-                    _entryTextObjectsScore[i].text = $"{entries[i].Score}";
-                }
-            });
-        }
+       
         
         public void UploadEntry()
         {
+            warningText.text = "Please Wait";
+            lockImg.SetActive(true);
             Leaderboards.SoloDevJa4.UploadNewEntry(_usernameInputField.text, Score, isSuccessful =>
             {
-                _usernameInputField.text ??= "Anonymous";
-
+               
                 if (isSuccessful)
                 {
                     restartMenu.SetActive(true);
@@ -110,6 +75,8 @@ namespace LeaderboardCreatorDemo
                 else
                 {
                     warningText.text = "Something Wrong Happened. Try Again";
+                    lockImg.SetActive(false);
+
                 }
                 
             });
