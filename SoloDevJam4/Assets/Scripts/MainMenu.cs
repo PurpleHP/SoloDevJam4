@@ -18,5 +18,14 @@ public class MainMenu : MonoBehaviour
    {
       leaderBoardPanel.SetActive(true);
    }
-   
+
+   public void HideLeaderboard()
+   {
+      leaderBoardPanel.SetActive(false);
+   }
+
+   public void FullScreen()
+   {
+      Screen.fullScreen = !Screen.fullScreen;
+   }
 }

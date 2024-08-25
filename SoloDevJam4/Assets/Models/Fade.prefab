@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5522386375292938077}
   - component: {fileID: 7967711165701239487}
   - component: {fileID: 3580039840923422248}
+  - component: {fileID: 6557799722240363169}
   m_Layer: 5
   m_Name: Fade
   m_TagString: Untagged
@@ -28,7 +29,7 @@ RectTransform:
   m_GameObject: {fileID: 4984179305816423810}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.0252309, y: 1.0252309, z: 1.0252309}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -67,7 +68,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -86,7 +87,7 @@ Animator:
   m_GameObject: {fileID: 4984179305816423810}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 88f9a8f50abdccc4f8673929cf05e89c, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6a25534773195e24b9094522da569370, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -98,3 +99,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6557799722240363169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4984179305816423810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 903d895f593fb9840a8b40998a171b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  img: {fileID: 7967711165701239487}
+  anim: {fileID: 3580039840923422248}

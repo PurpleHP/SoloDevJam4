@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
+
 public class CameraFade : MonoBehaviour
 {
     public Image img;
@@ -13,6 +14,11 @@ public class CameraFade : MonoBehaviour
     {
         StartCoroutine(Fading(levelName));
     }
+    
+    public void StartFade()
+    {
+        StartCoroutine(Fading());
+    }
 
     IEnumerator Fading(string levelName)
     {
@@ -21,8 +27,15 @@ public class CameraFade : MonoBehaviour
         anim.SetBool("Fade",false);
 
         yield return new WaitForSeconds(1f);
-        //yield return new WaitUntil(() => Math.Abs(img.color.a - 1) < 0.00005f);
         SceneManager.LoadScene(levelName);
+    }
+    IEnumerator Fading()
+    {
+        anim.SetBool("Fade",true);
+        yield return new WaitForSeconds(0.5f);
+        anim.SetBool("Fade",false);
+
+        yield return new WaitForSeconds(1f);
     }
 
 }

@@ -15,6 +15,8 @@ namespace CustomCamera
 
     public class FollowCamera2D : MonoBehaviour
     {
+        private float leftMoveSpeed;
+        [SerializeField] private PlayerMovement playerScript;
         private Transform target;
         public static bool isDead;
         public float dampTime = 0.15f;
@@ -68,6 +70,7 @@ namespace CustomCamera
             isDeadZoneHorizontal = ((deadZoneType & Direction.Horizontal) == Direction.Horizontal) && isFollowHorizontal;
             isDeadZoneVertical = ((deadZoneType & Direction.Vertical) == Direction.Vertical) && isFollowVertical;
             tempVec = Vector3.one;
+            leftMoveSpeed = playerScript.speed *-1;
         }
         
         //Set the camera when the player spawns.
@@ -137,6 +140,7 @@ namespace CustomCamera
                 if (isBoundVertical) {
                     tempVec.y = Mathf.Clamp (tempVec.y, lowerBound + vertExtent, upperBound - vertExtent);
                 }
+                tempVec.x -= Time.deltaTime * leftMoveSpeed;
 
                 tempVec.z = transform.position.z;
                 transform.position = tempVec;
