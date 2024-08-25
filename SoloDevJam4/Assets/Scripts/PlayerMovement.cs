@@ -46,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     private static readonly int DidShoot = Animator.StringToHash("didShoot");
     private static readonly int IsOnAir = Animator.StringToHash("isOnAir");
     private static readonly int Hit = Animator.StringToHash("gotHit");
+    private static readonly int IsDead = Animator.StringToHash("isDead");
 
 
     private void Awake()
@@ -184,7 +185,16 @@ public class PlayerMovement : MonoBehaviour
         hp--;
         hpText.text = hp.ToString();
         ScaleBarDown();
+        if (hp <= 0)
+        {
+            speed = 0;
+            animator.SetBool(IsDead,true);
+            _rb.linearVelocity = Vector3.zero;
+            _rb.useGravity = true;
+
+        }
         StartCoroutine(TakeDamage());
+        
     }
     
     public void ScaleBarDown()

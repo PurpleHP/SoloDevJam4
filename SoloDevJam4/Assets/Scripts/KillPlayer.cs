@@ -12,14 +12,12 @@ public class KillPlayer : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            
             PlayerMovement pm = other.gameObject.GetComponent<PlayerMovement>();
             pm.GotHit();
             if (pm.hp <= 0)
             {
-                Instantiate(explosion, other.gameObject.transform.position, Quaternion.identity);
-                Destroy(other.gameObject);
-                cameraFade.StartFade();
-                StartCoroutine(WaitForFade());
+                StartCoroutine(WaitForFade(other.gameObject));
             }
             else
             {
@@ -39,9 +37,14 @@ public class KillPlayer : MonoBehaviour
         mat.color = originalColor;
     }
     
-    IEnumerator WaitForFade()
+    IEnumerator WaitForFade(GameObject Player)
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.4f);
+        cameraFade.StartFade();
+        yield return new WaitForSeconds(0.3f);
+        Instantiate(explosion, Player.transform.position, Quaternion.identity);
+        Destroy(Player);
+        yield return new WaitForSeconds(1.2f);
         gameOverScreen.SetActive(true);
     }
 }
