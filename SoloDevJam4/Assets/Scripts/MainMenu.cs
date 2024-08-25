@@ -2,15 +2,21 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+   [SerializeField] private CameraFade _cameraFade;
+   [SerializeField] private GameObject leaderBoardPanel;
+   public void QuitGame()
+   {
+      Application.Quit();
+   }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   public void StartLevel()
+   {
+      _cameraFade.StartFade("Level");
+   }
+
+   public void ShowLeaderboard()
+   {
+      leaderBoardPanel.SetActive(true);
+   }
+   
 }

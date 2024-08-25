@@ -23,7 +23,7 @@ namespace CustomCamera
         public float
             cameraCenterX = 0.5f;
         [Range(0.0f,1.0f)]
-        public float
+        public static float
             cameraCenterY = 0.5f;
         public Direction boundType = Direction.None;
         public float leftBound = 0;
