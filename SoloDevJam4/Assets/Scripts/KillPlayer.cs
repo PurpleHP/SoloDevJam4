@@ -15,11 +15,14 @@ public class KillPlayer : MonoBehaviour
             
             PlayerMovement pm = other.gameObject.GetComponent<PlayerMovement>();
             pm.GotHit();
-            if (pm.hp <= 0)
+            if (pm.hp == 0)
             {
+                pm.speed = 0;
+                pm.GetComponent<Rigidbody>().isKinematic = true;
+                
                 StartCoroutine(WaitForFade(other.gameObject));
             }
-            else
+            else if(pm.hp < 0)
             {
                 if (mat != null)
                 {
@@ -37,13 +40,13 @@ public class KillPlayer : MonoBehaviour
         mat.color = originalColor;
     }
     
-    IEnumerator WaitForFade(GameObject Player)
+    IEnumerator WaitForFade(GameObject player)
     {
         yield return new WaitForSeconds(1.4f);
         cameraFade.StartFade();
         yield return new WaitForSeconds(0.3f);
-        Instantiate(explosion, Player.transform.position, Quaternion.identity);
-        Destroy(Player);
+        Instantiate(explosion, player.transform.position, Quaternion.identity);
+        Destroy(player);
         yield return new WaitForSeconds(1.2f);
         gameOverScreen.SetActive(true);
     }

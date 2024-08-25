@@ -122,5 +122,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosion: {fileID: 7678401589922002154, guid: ef933a47d13a3f1448b43da0f210916b, type: 3}
-  cameraFade: {fileID: 0}
-  gameOverScreen: {fileID: 0}
+  cameraFade: {fileID: 8279279226410790297, guid: 3b02dce8f67999249a00e8f1ed4f7ebb, type: 3}
+  gameOverScreen: {fileID: 1935484530295579911, guid: 1cd36197184173b439f5dff5509de468, type: 3}
+  mat: {fileID: 2100000, guid: 3d93619025081414388577c7c404be4a, type: 2}

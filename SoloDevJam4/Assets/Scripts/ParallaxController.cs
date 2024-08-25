@@ -6,7 +6,7 @@ public class ParallaxController : MonoBehaviour
 {
     [SerializeField] Transform cam; //Main Camera
     Vector3 camStartPos;
-    float distance; //jarak antara start camera posisi dan current posisi
+    float distance; 
 
     GameObject[] backgrounds;
     Material[] mat;
@@ -46,7 +46,7 @@ public class ParallaxController : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < backCount; i++) //set the speed of bacground
+        for (int i = 0; i < backCount; i++) //set the speed of background
         {
             backSpeed[i] = 1 - (backgrounds[i].transform.position.z - cam.position.z) / farthestBack;
         }
@@ -55,7 +55,7 @@ public class ParallaxController : MonoBehaviour
     private void LateUpdate()
     {
         distance = cam.position.x - camStartPos.x;
-        transform.position = new Vector3(cam.position.x, transform.position.y, 0);
+        transform.position = new Vector3(cam.position.x, transform.position.y,1);
 
         for (int i = 0; i < backgrounds.Length; i++)
         {

@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public float hp;
     private float startingScaleCount;
     private float _imgDecreseCount;
-
+    public Material mat;
 
     [Header("Light - Camera")]
     [SerializeField] private Camera sceneCamera;
@@ -47,10 +47,15 @@ public class PlayerMovement : MonoBehaviour
     private static readonly int IsOnAir = Animator.StringToHash("isOnAir");
     private static readonly int Hit = Animator.StringToHash("gotHit");
     private static readonly int IsDead = Animator.StringToHash("isDead");
+    
+    [Header("Effects")]
+    [SerializeField] private GameObject explosion;
+
 
 
     private void Awake()
     {
+        mat.color = Color.white;
         if(hp ==0)
             hp = 3;
         PlayerPrefs.SetInt("Score",0);
@@ -97,7 +102,6 @@ public class PlayerMovement : MonoBehaviour
        
         if (Input.GetKeyDown(KeyCode.Q) && !_isShooting)
         {
-            Debug.Log("Shot");
             _isShooting = true;
             animator.SetTrigger(DidShoot);
             StartCoroutine(Shoot());
@@ -167,7 +171,12 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator Shoot()
     {
-        GameObject bullet = Instantiate(bulletPrefab, gunPoint.transform.position, gunPoint.transform.rotation);
+        Transform gunpoint = gunPoint.transform;
+        var position = gunpoint.position;
+        GameObject bullet = Instantiate(bulletPrefab, position, gunpoint.rotation);
+        var bulletSmoke =  Instantiate(explosion, position, Quaternion.identity);
+        bulletSmoke.transform.parent = gunpoint;
+
         Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
         if (bulletRb != null)
         {
@@ -182,7 +191,9 @@ public class PlayerMovement : MonoBehaviour
     public void GotHit()
     {
         animator.SetTrigger(Hit);
-        hp--;
+        if (hp > 0)
+            hp--;
+
         hpText.text = hp.ToString();
         ScaleBarDown();
         if (hp <= 0)
