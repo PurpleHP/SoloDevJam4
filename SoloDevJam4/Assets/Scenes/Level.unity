@@ -5011,6 +5011,10 @@ PrefabInstance:
       propertyPath: gameOverScreen
       value: 
       objectReference: {fileID: 1036349061}
+    - target: {fileID: 5318623562605836819, guid: fa252901ebf40e843a09aa9e4373a7c4, type: 3}
+      propertyPath: playerDeathEffect
+      value: 
+      objectReference: {fileID: 7678401589922002154, guid: 71dc32453bfba3142a237ae7b994d323, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5709,7 +5713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68d8228bf4a04de4e8888da5d1a0e4b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDeathEffect: {fileID: 0}
+  playerDeathEffect: {fileID: 7678401589922002154, guid: 71dc32453bfba3142a237ae7b994d323, type: 3}
   cameraFade: {fileID: 1883061410}
   gameOverScreen: {fileID: 1036349061}
   mat: {fileID: 2100000, guid: 3d93619025081414388577c7c404be4a, type: 2}
