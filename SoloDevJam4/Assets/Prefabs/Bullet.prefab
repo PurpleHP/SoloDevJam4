@@ -149,4 +149,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 702d612a7273e024c91d656a07ce6a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosion: {fileID: 7678401589922002154, guid: ef933a47d13a3f1448b43da0f210916b, type: 3}
+  enemyDeath: {fileID: 7678401589922002154, guid: e949a3737fed928439f1512cd3fea3e7, type: 3}
+  ufoDeath: {fileID: 7678401589922002154, guid: 516566c3cc5cd0a498f36dd59bdbbdc4, type: 3}

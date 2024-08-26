@@ -17,6 +17,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
+     
         masterSlider.onValueChanged.AddListener(SetMasterVolume);
         musicSlider.onValueChanged.AddListener(SetMusicVolume);
         sfxSlider.onValueChanged.AddListener(SetSFXVolume);
@@ -28,6 +29,10 @@ public class AudioManager : MonoBehaviour
        
         if (instance == null)
         {
+            masterSlider = GameObject.Find("MasterSlider").GetComponent<Slider>();
+            musicSlider = GameObject.Find("MusicSlider").GetComponent<Slider>();
+            sfxSlider = GameObject.Find("SFXSlider").GetComponent<Slider>();
+
             instance = this;
             DontDestroyOnLoad(gameObject);
             LoadVolumeSettings();

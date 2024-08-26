@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4640251980373814138}
   - component: {fileID: 3981711103823616282}
   - component: {fileID: 7580860073369574281}
+  - component: {fileID: -1242978085312068332}
   m_Layer: 8
   m_Name: Rock
   m_TagString: Enemy
@@ -30,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.03, y: 0.21, z: -0.1167835}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -121,3 +122,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 122792eb7dd33b04496b75d4c3f64489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-1242978085312068332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 414592422554662052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68d8228bf4a04de4e8888da5d1a0e4b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosion: {fileID: 7678401589922002154, guid: e949a3737fed928439f1512cd3fea3e7, type: 3}
+  cameraFade: {fileID: 0}
+  gameOverScreen: {fileID: 0}
+  mat: {fileID: -4586444591600750072, guid: 1a556a02fb1fb64409dcf1274d1301e3, type: 3}

@@ -5,9 +5,9 @@ public class ThrowRock : MonoBehaviour
 {
     public GameObject rockPrefab;
     public Transform player;
-    public float throwSpeed = 5.0f;
+    public float throwSpeed = 500.0f;
     private Animator anim;
-    public float countdownTime = 3.0f;
+    public float countdownTime = 4.0f;
     private Transform spawnPoint;
     private static readonly int Rock = Animator.StringToHash("throwRock");
 
@@ -18,7 +18,7 @@ public class ThrowRock : MonoBehaviour
 
         foreach (Transform child in childTransforms)
         {
-            if (child.CompareTag("Spawn")) // Check if the child has the "Spawn" tag
+            if (child.CompareTag("Spawn")) // Find the child with spawn tag
             {
                 spawnPoint = child;
                 break; 
@@ -32,25 +32,30 @@ public class ThrowRock : MonoBehaviour
         while (true)  // Loop to keep throwing rocks every countdown time
         {
             anim.SetTrigger(Rock);
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.65f);
             
             GameObject thrownRock = Instantiate(rockPrefab, spawnPoint.position, Quaternion.identity);
             StartCoroutine(MoveRockToPlayer(thrownRock)); // Start moving the rock
 
-            yield return new WaitForSeconds(countdownTime - 0.3f);
+            yield return new WaitForSeconds(countdownTime - 0.65f);
         }
     }
 
     IEnumerator MoveRockToPlayer(GameObject rock)
     {
-        while (rock != null && Vector3.Distance(rock.transform.position, player.position) > 0.1f)
+        float elapsedTime = 0f;
+
+        Vector3 playerpos = player.position;
+
+        while (rock != null && elapsedTime < 4f)
         {
             var position = rock.transform.position;
-            Vector3 directionToPlayer = (player.position - position).normalized;
+            Vector3 directionToPlayer = (playerpos - position).normalized;
             position += directionToPlayer * (throwSpeed * Time.deltaTime);
             rock.transform.position = position;
 
-            yield return null; // Wait for the next frame
+            elapsedTime += Time.deltaTime;  
+            yield return null;  
         }
 
         if (rock != null)
@@ -58,4 +63,5 @@ public class ThrowRock : MonoBehaviour
             Destroy(rock);
         }
     }
+
 }

@@ -2,13 +2,21 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private GameObject explosion;
+    [SerializeField] private GameObject enemyDeath;
+    [SerializeField] private GameObject ufoDeath;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            Instantiate(explosion, other.gameObject.transform.position, Quaternion.identity);
+            if (other.gameObject.name.Contains("UFO"))
+            {
+                Instantiate(ufoDeath, other.gameObject.transform.position, Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(enemyDeath, other.gameObject.transform.position, Quaternion.identity);
+            }
             Destroy(other.gameObject);
             Destroy(gameObject);
         }
