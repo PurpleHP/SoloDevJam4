@@ -35,7 +35,7 @@ public class SectionTrigger : MonoBehaviour
 
                 }
             }
-            float randomValue = Random.Range(-2f, 2f);
+            float randomValue = Random.Range(-3f, 3f);
             Vector3 spawnPointCoordinates = new Vector3(_spawnPosition.x, randomValue,
                 _spawnPosition.z);
             Instantiate(road, spawnPointCoordinates, Quaternion.identity);

@@ -18,6 +18,7 @@ namespace LeaderboardCreatorDemo
         [SerializeField] private GameObject restartMenu;
         [SerializeField] private GameObject lockImg;
 
+        [SerializeField] private AudioSource click;
 // Make changes to this section according to how you're storing the player's score:
 // ------------------------------------------------------------
 
@@ -56,6 +57,7 @@ namespace LeaderboardCreatorDemo
         
         public void UploadEntry()
         {
+            click.Play();
             warningText.text = "Please Wait";
             if(_usernameInputField.text != null)
                 lockImg.SetActive(true);

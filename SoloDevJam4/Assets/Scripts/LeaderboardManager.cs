@@ -31,7 +31,6 @@ namespace LeaderboardCreatorDemo
 
         private void Start()
         {
-            Debug.Log(PlayerPrefs.GetInt("Score"));
             if (_entryTextObjects.Length != 0)
             {
                 LoadEntries();
@@ -39,12 +38,10 @@ namespace LeaderboardCreatorDemo
             if (_scoreText1 != null)
             {
                 _scoreText1.text = "Final Score: " + PlayerPrefs.GetInt("Score");
-                Debug.Log("ScoreTExt1 isnt null");
             }
             if (_scoreText2 != null)
             {
                 _scoreText2.text = "Final Score: " + PlayerPrefs.GetInt("Score");
-                Debug.Log("ScoreTExt2 isnt null");
 
             }
         }
@@ -65,12 +62,10 @@ namespace LeaderboardCreatorDemo
             if (_scoreText1 != null)
             {
                 _scoreText1.text = "Final Score: " + PlayerPrefs.GetInt("Score");
-                Debug.Log("ScoreTExt1 isnt null");
             }
             if (_scoreText2 != null)
             {
                 _scoreText2.text = "Final Score: " + PlayerPrefs.GetInt("Score");
-                Debug.Log("ScoreTExt2 isnt null");
 
             }
         }
@@ -100,7 +95,6 @@ namespace LeaderboardCreatorDemo
         {
             Leaderboards.SoloDevJa4.UploadNewEntry(_usernameInputField.text, Score, isSuccessful =>
             {
-                _usernameInputField.text ??= "Anonymous";
 
                 if (isSuccessful)
                 {

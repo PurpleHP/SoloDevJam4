@@ -17,7 +17,6 @@ public class ReturnCameraToPlayer : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             found = true;
-            Debug.Log("Starting");
             player = other.gameObject;
             playerSpeed = player.gameObject.GetComponent<PlayerMovement>().speed;
             playerPos = player.gameObject.transform.position;
@@ -44,7 +43,7 @@ public class ReturnCameraToPlayer : MonoBehaviour
             yield return null;
         }
     
-        //camera.transform.position = targetPosition;
+        camera.transform.position = targetPosition;
     }
 
     private void Update()

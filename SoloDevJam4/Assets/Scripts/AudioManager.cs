@@ -26,21 +26,8 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
-        masterSlider = GameObject.Find("MasterSlider").GetComponent<Slider>();
-        musicSlider = GameObject.Find("MusicSlider").GetComponent<Slider>();
-        sfxSlider = GameObject.Find("SFXSlider").GetComponent<Slider>();
-        if (instance == null)
-        {
-            
-            
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-            LoadVolumeSettings();
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+
+        LoadVolumeSettings();
     }
 
     public void SetMasterVolume(float volume)

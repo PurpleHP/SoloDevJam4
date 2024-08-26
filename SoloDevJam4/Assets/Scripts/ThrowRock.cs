@@ -35,6 +35,9 @@ public class ThrowRock : MonoBehaviour
             yield return new WaitForSeconds(0.65f);
             
             GameObject thrownRock = Instantiate(rockPrefab, spawnPoint.position, Quaternion.identity);
+            thrownRock.GetComponent<Rock>().spawnTime = 4f;
+            thrownRock.transform.parent = transform;
+
             StartCoroutine(MoveRockToPlayer(thrownRock)); // Start moving the rock
 
             yield return new WaitForSeconds(countdownTime - 0.65f);

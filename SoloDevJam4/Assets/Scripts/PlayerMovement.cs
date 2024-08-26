@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     
     private Vector3 _gravity;
     private bool _onNormalGravity = true;
-    private bool _canChangeGravity;
+    public bool _canChangeGravity;
     
     [Header("Ground Check")]
     [SerializeField] private GameObject playerFeet;
@@ -41,8 +41,8 @@ public class PlayerMovement : MonoBehaviour
     //Shooting---
     private bool _isShooting;
     [SerializeField] private GameObject gunPoint;
-    [SerializeField] private float gunCooldownAndBulletDestroy = 0.5f; 
-    [SerializeField] private float bulletSpeed;
+    [SerializeField] private float gunCooldown = 0.5f; 
+    private float bulletSpeed;
     [SerializeField] private GameObject bulletPrefab;
     private static readonly int DidShoot = Animator.StringToHash("didShoot");
     private static readonly int IsOnAir = Animator.StringToHash("isOnAir");
@@ -56,12 +56,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject feetJumpDustEffect;
 
     [Header("Sound")] 
-    [SerializeField] private GameObject run;
-    [SerializeField] private GameObject jump;
-    [SerializeField] private GameObject shoot;
-    [SerializeField] private GameObject enemyDeath;
-    [SerializeField] private GameObject playerDeath;
-    [SerializeField] private GameObject enemyAttack;
+    [SerializeField] public AudioSource run;
+    [SerializeField] private AudioSource jump;
+    [SerializeField] private AudioSource shoot;
+    [SerializeField] public AudioSource enemyDeath;
+    [SerializeField] public AudioSource ufoDeath;
+    [SerializeField] public AudioSource playerDeath;
+    [SerializeField] public AudioSource playerHurt;
+
+    private bool playRunSfx;
 
     private void Awake()
     {
@@ -74,23 +77,27 @@ public class PlayerMovement : MonoBehaviour
         scoreText.text = "0";
         hpText.text = "3";
         playerMesh.SetActive(false);
+        playRunSfx = false;
     }
 
     void Start()
     {
         StartCoroutine(PlayAnimation());
-        
        
     }
 
     private void Update()
     {
-        speed += 0.001f;
+        if(speed < 30) 
+            speed += 0.0011f;
+        bulletSpeed = speed + 15;
+        
         if (_rb.linearVelocity.x > 0.1f)
         {
             score += Time.deltaTime + (speed * 0.0001f);
         }
         int intScore = Mathf.FloorToInt(score);
+        
         
         PlayerPrefs.SetInt("Score",intScore);
 
@@ -99,6 +106,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && _canChangeGravity)
         {
             Instantiate(feetJumpDustEffect, playerFeet.transform.position, Quaternion.identity);
+            jump.Play();
             ChangeGravity();
 
         }
@@ -106,16 +114,29 @@ public class PlayerMovement : MonoBehaviour
 
         if (colliders.Length != 0)
         {
+            if (playRunSfx)
+            {
+                playRunSfx = false;
+                run.Play();
+            }
             _canChangeGravity = true;
             animator.SetBool(IsOnAir,false);
         }
+        else
+        {
+            playRunSfx = true;
+            run.Stop();
+        }
+        
         
 
        
         if (Input.GetKeyDown(KeyCode.Q) && !_isShooting)
         {
+            shoot.Play();
             _isShooting = true;
             animator.SetTrigger(DidShoot);
+            
             StartCoroutine(Shoot());
         }
         
@@ -185,18 +206,14 @@ public class PlayerMovement : MonoBehaviour
         Transform gunpoint = gunPoint.transform;
         var position = gunpoint.position;
         GameObject bullet = Instantiate(bulletPrefab, position, gunpoint.rotation);
+        bullet.GetComponent<Bullet>().bulletSpeed = bulletSpeed;
+        Destroy(bullet, 4f);
         var bulletSmoke =  Instantiate(playerDeathEffect, position, Quaternion.identity);
         bulletSmoke.transform.parent = gunpoint;
 
-        Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-        if (bulletRb != null)
-        {
-            bulletRb.AddForce(gameObject.transform.right * bulletSpeed, ForceMode.Impulse);
-            
-        }
-        yield return new WaitForSeconds(gunCooldownAndBulletDestroy);
+        
+        yield return new WaitForSeconds(gunCooldown);
         _isShooting = false;
-        Destroy(bullet, gunCooldownAndBulletDestroy);
     }
 
     public void GotHit()
@@ -290,6 +307,8 @@ public class PlayerMovement : MonoBehaviour
         _rb.isKinematic = false;
         FollowCamera2D.SetTarget(gameObject.transform);
         _gravity = Physics.gravity;
+        playRunSfx = true;
+
     }
 
 }

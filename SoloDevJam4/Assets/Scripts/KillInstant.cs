@@ -6,7 +6,7 @@ public class KillInstant : MonoBehaviour
     [SerializeField] private GameObject explosion;
     [SerializeField] private CameraFade cameraFade;
     [SerializeField] private GameObject gameOverScreen;
-
+    [SerializeField] private AudioSource deathSound;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -18,7 +18,9 @@ public class KillInstant : MonoBehaviour
 
             pm.speed = 0;
             pm.GetComponent<Rigidbody>().isKinematic = true;
-
+            pm.GetComponent<BoxCollider>().enabled = false;
+            pm.run.Stop();
+            deathSound.Play();
             StartCoroutine(WaitForFade(other.gameObject));
         }
     }

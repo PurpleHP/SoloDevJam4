@@ -8,6 +8,8 @@ public class KillPlayer : MonoBehaviour
     public CameraFade cameraFade;
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private Material mat;
+    [SerializeField] private Transform bloodSpawn;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -19,16 +21,22 @@ public class KillPlayer : MonoBehaviour
             {
                 pm.speed = 0;
                 pm.GetComponent<Rigidbody>().isKinematic = true;
-                StartCoroutine(WaitForFade(other.gameObject));
+                pm.run.Stop();
+                pm.playerDeath.Play();
+                GameObject o;
+                (o = other.gameObject).GetComponent<BoxCollider>().enabled = false;
+                StartCoroutine(WaitForFade(o));
             }
-            else if(pm.hp < 0)
+            else if(pm.hp > 0)
             {
                 if (mat != null)
                 {
                     Color color = mat.color;
+                    pm.playerHurt.Play();
                     StartCoroutine(ChangeColor(color));
                 }
             }
+            
             
         }
     }
@@ -36,23 +44,18 @@ public class KillPlayer : MonoBehaviour
     private IEnumerator ChangeColor(Color originalColor)
     {
         mat.color = Color.red;
-        yield return new WaitForSeconds(0.5f); 
+        yield return new WaitForSeconds(0.1f); 
         mat.color = originalColor;
     }
     
     IEnumerator WaitForFade(GameObject player)
     {
-                yield return new WaitForSeconds(0.4f);
-
-        Instantiate(playerDeathEffect, player.transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(0.4f);
+        Instantiate(playerDeathEffect, bloodSpawn.position, Quaternion.identity);
         yield return new WaitForSeconds(1f);
 
         cameraFade.StartFade();
         yield return new WaitForSeconds(0.3f);
-        // if (player != null)
-        // {
-        //     Destroy(player);
-        // }
         yield return new WaitForSeconds(1.2f);
         gameOverScreen.SetActive(true);
     }
