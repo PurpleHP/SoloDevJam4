@@ -42,14 +42,17 @@ public class KillPlayer : MonoBehaviour
     
     IEnumerator WaitForFade(GameObject player)
     {
-        yield return new WaitForSeconds(1.4f);
+                yield return new WaitForSeconds(0.4f);
+
+        Instantiate(playerDeathEffect, player.transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(1f);
+
         cameraFade.StartFade();
         yield return new WaitForSeconds(0.3f);
-        if (player != null)
-        {
-            Instantiate(playerDeathEffect, player.transform.position, Quaternion.identity);
-            Destroy(player);
-        }
+        // if (player != null)
+        // {
+        //     Destroy(player);
+        // }
         yield return new WaitForSeconds(1.2f);
         gameOverScreen.SetActive(true);
     }

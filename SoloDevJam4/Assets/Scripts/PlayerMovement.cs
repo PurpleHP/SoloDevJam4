@@ -3,6 +3,7 @@ using System.Collections;
 using CustomCamera;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
@@ -13,8 +14,6 @@ public class PlayerMovement : MonoBehaviour
     private float score;
     public float hp;
     private float startHp;
-    private float startingScaleCount;
-    private float _imgDecreseCount;
     public Material mat;
     [SerializeField] private GameObject playerMesh;
 
@@ -50,8 +49,11 @@ public class PlayerMovement : MonoBehaviour
     private static readonly int Hit = Animator.StringToHash("gotHit");
     private static readonly int IsDead = Animator.StringToHash("isDead");
     
+    [FormerlySerializedAs("explosion")]
     [Header("Effects")]
-    [SerializeField] private GameObject explosion;
+    [SerializeField] private GameObject playerDeathEffect;
+
+    [SerializeField] private GameObject feetJumpDustEffect;
 
     [Header("Sound")] 
     [SerializeField] private GameObject run;
@@ -71,8 +73,6 @@ public class PlayerMovement : MonoBehaviour
         score = 0;
         scoreText.text = "0";
         hpText.text = "3";
-        startingScaleCount = hp;
-        _imgDecreseCount = _greenImage.rectTransform.sizeDelta.x / startingScaleCount;
         playerMesh.SetActive(false);
     }
 
@@ -98,7 +98,9 @@ public class PlayerMovement : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Space) && _canChangeGravity)
         {
+            Instantiate(feetJumpDustEffect, playerFeet.transform.position, Quaternion.identity);
             ChangeGravity();
+
         }
         Collider[] colliders= Physics.OverlapSphere(playerFeet.transform.position, collisionRadius, collisionLayer);
 
@@ -183,7 +185,7 @@ public class PlayerMovement : MonoBehaviour
         Transform gunpoint = gunPoint.transform;
         var position = gunpoint.position;
         GameObject bullet = Instantiate(bulletPrefab, position, gunpoint.rotation);
-        var bulletSmoke =  Instantiate(explosion, position, Quaternion.identity);
+        var bulletSmoke =  Instantiate(playerDeathEffect, position, Quaternion.identity);
         bulletSmoke.transform.parent = gunpoint;
 
         Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();

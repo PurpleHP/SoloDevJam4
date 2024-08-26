@@ -7,17 +7,30 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        var enemy = other.gameObject;
+        if (enemy.CompareTag("Enemy"))
         {
-            if (other.gameObject.name.Contains("UFO"))
+            if (enemy.name.Contains("UFO"))
             {
-                Instantiate(ufoDeath, other.gameObject.transform.position, Quaternion.identity);
+                Instantiate(ufoDeath, enemy.transform.position, Quaternion.identity);
             }
             else
             {
-                Instantiate(enemyDeath, other.gameObject.transform.position, Quaternion.identity);
+                Instantiate(enemyDeath, enemy.transform.position, Quaternion.identity);
             }
-            Destroy(other.gameObject);
+
+            if (enemy.transform.parent != null)
+            {
+                Debug.Log("Parent found");
+                Transform parent = enemy.transform.parent;
+
+                foreach (Transform sibling in parent)
+                {
+                    Destroy(sibling.gameObject);
+                }
+                Destroy(enemy.transform.parent);
+            }
+            Destroy(enemy);
             Destroy(gameObject);
         }
         else
