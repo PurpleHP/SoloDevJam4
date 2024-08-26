@@ -15,7 +15,7 @@ namespace CustomCamera
 
     public class FollowCamera2D : MonoBehaviour
     {
-        private float leftMoveSpeed;
+        public float leftMoveSpeed;
         [SerializeField] private PlayerMovement playerScript;
         private Transform target;
         public static bool isDead;
@@ -25,7 +25,7 @@ namespace CustomCamera
         public float
             cameraCenterX = 0.5f;
         [Range(0.0f,1.0f)]
-        public static float
+        public  float
             cameraCenterY = 0.5f;
         public Direction boundType = Direction.None;
         public float leftBound = 0;

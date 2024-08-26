@@ -147,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 cameraAngles = sceneCamera.transform.rotation.eulerAngles;
         Vector3 lightAngles = sceneLight.transform.rotation.eulerAngles;
-        FollowCamera2D.cameraCenterY = _onNormalGravity ? 0.6f : 0.4f;
+        //FollowCamera2D.cameraCenterY = _onNormalGravity ? 0.6f : 0.4f;
         _onNormalGravity = !_onNormalGravity;
 
         float startCameraRot = cameraAngles.x;

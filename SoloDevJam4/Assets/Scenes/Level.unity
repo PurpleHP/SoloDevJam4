@@ -2078,6 +2078,10 @@ PrefabInstance:
       propertyPath: gameOverScreen
       value: 
       objectReference: {fileID: 1036349061}
+    - target: {fileID: 876372397895575255, guid: 579f45097e10b61459e84030d8a5b0b2, type: 3}
+      propertyPath: playerDeathEffect
+      value: 
+      objectReference: {fileID: 7678401589922002154, guid: 71dc32453bfba3142a237ae7b994d323, type: 3}
     - target: {fileID: 902536780814381154, guid: 579f45097e10b61459e84030d8a5b0b2, type: 3}
       propertyPath: m_Name
       value: FlyingEnemy
@@ -3586,8 +3590,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosion: {fileID: 7678401589922002154, guid: 71dc32453bfba3142a237ae7b994d323, type: 3}
-  cameraFade: {fileID: 0}
-  gameOverScreen: {fileID: 0}
+  cameraFade: {fileID: 1883061410}
+  gameOverScreen: {fileID: 1036349061}
 --- !u!1 &1121102380
 GameObject:
   m_ObjectHideFlags: 0
@@ -5705,7 +5709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68d8228bf4a04de4e8888da5d1a0e4b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosion: {fileID: 7678401589922002154, guid: e949a3737fed928439f1512cd3fea3e7, type: 3}
+  playerDeathEffect: {fileID: 0}
   cameraFade: {fileID: 1883061410}
   gameOverScreen: {fileID: 1036349061}
   mat: {fileID: 2100000, guid: 3d93619025081414388577c7c404be4a, type: 2}
@@ -7033,6 +7037,10 @@ PrefabInstance:
       propertyPath: gameOverScreen
       value: 
       objectReference: {fileID: 1036349061}
+    - target: {fileID: -1029068799824298937, guid: 0fb52df10843b014e8bb3ad7938728ea, type: 3}
+      propertyPath: playerDeathEffect
+      value: 
+      objectReference: {fileID: 7678401589922002154, guid: 71dc32453bfba3142a237ae7b994d323, type: 3}
     - target: {fileID: 4820043376520371442, guid: 0fb52df10843b014e8bb3ad7938728ea, type: 3}
       propertyPath: m_LocalPosition.x
       value: -173.85165
@@ -7617,10 +7625,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5f352ff39b6e2741877ac626314c660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftMoveSpeed: 0
   playerScript: {fileID: 2036499193}
   dampTime: 0.15
   followType: 2
   cameraCenterX: 0.35
+  cameraCenterY: 0.5
   boundType: 0
   leftBound: 0
   rightBound: 0
